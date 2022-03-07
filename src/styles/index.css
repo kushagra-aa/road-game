@@ -1,4 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Contrail+One&display=swap");
 * {
+  font-family: "Contrail One", cursive;
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
@@ -36,12 +38,14 @@ body {
 }
 
 .start-screen {
+  text-transform: uppercase;
   position: absolute;
   font-size: 5vmin;
-  top: 50%;
+  width: fit-content;
+  top: 10%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
 }
 
 .hide {
@@ -49,24 +53,19 @@ body {
 }
 
 .ground {
-  --left: 0;
   position: absolute;
   width: 300%;
   bottom: 0;
-  left: calc(var(--left) * 1%);
 }
 
 .dino {
-  --bottom: 0;
   position: absolute;
   left: 1%;
   height: 30%;
-  bottom: calc(var(--bottom) * 1%);
 }
 
 .cactus {
   position: absolute;
-  left: calc(var(--left) * 1%);
   height: 30%;
   bottom: 0;
 }
