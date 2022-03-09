@@ -37,14 +37,12 @@ export const Ground = ({ left }) => {
         style={ground1Style}
         src={GroundItem}
         alt="ground"
-        data-ground
       />
       <img
         className="ground"
         style={ground2Style}
         src={GroundItem}
         alt="ground"
-        data-ground
       />
     </>
   );

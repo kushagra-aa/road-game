@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dino } from "./Dino.jsx";
+import { Dino, updateDino } from "./Dino.jsx";
 import { Ground, updateGround } from "./Ground.jsx";
 
 const Main = () => {
@@ -7,6 +7,8 @@ const Main = () => {
   const [score, setScore] = useState(0);
   const [worldStyle, setWorldStyle] = useState();
   const [groundLeft, setGroundLeft] = useState([0, 300]);
+  const [dinoFrame, setDinoFrame] = useState(0);
+  const [dinoBottom, setDinoBottom] = useState(0);
 
   const WORLD_WIDTH = 100;
   const WORLD_HEIGHT = 30;
@@ -39,22 +41,15 @@ const Main = () => {
   const update = async (time) => {
     if (lastTime == null) {
       lastTime = time;
-      // console.log("time in iffe :>> ", time);
-      // console.log("lastTime in iffe:", lastTime);
       window.requestAnimationFrame(update);
       return;
     }
     const delta = time - lastTime;
-    // console.log("lastTime :>> ", lastTime);
-    // console.log("delta :>> ", delta);
-    // console.log("time :>> ", time);
     setGroundLeft(updateGround(delta, speedScale));
-    // console.log("groundLeft after :>> ", groundLeft);
+    updateDino(delta, speedScale, setDinoFrame, setDinoBottom);
     updateSpeedScale(delta);
     updateScore(delta);
-    // if(checkLoose())return handleLoose();
     lastTime = time;
-    // console.log("lastTime after :>> ", lastTime);
     window.requestAnimationFrame(update);
   };
 
@@ -83,7 +78,7 @@ const Main = () => {
       {!gameStart && <div className="start-screen">press any key to start</div>}
       <div style={worldStyle} className="world" data-world>
         <div className="score">{score}</div>
-        <Dino />
+        <Dino frame={dinoFrame} bottom={dinoBottom} />
         <Ground left={groundLeft} />
       </div>
     </>
