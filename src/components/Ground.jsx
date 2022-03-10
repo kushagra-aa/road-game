@@ -6,7 +6,7 @@ let newLeft = [0, 300];
 
 export const updateGround = async (delta, speedScale, left) => {
   newLeft.forEach((el, i) => {
-    newLeft[i] = newLeft[i] + delta * SPEED * -1;
+    newLeft[i] = newLeft[i] + delta * speedScale * SPEED * -1;
     if (newLeft[i] <= -300) {
       newLeft[i] += 600;
     }

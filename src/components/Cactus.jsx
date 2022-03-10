@@ -1,7 +1,7 @@
 import React from "react";
 
-const Cactus = () => {
-  return <div>Cactus</div>;
+const Cactus = ({ ref, item }) => {
+  return <img className="cactus" ref={ref} src={item} alt="cactus-item" />;
 };
 
 export default Cactus;
