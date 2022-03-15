@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Dino, updateDino } from "./Dino.jsx";
+import ReactDOM from "react-dom";
+import { Dino, setDinoLoose, updateDino } from "./Dino.jsx";
 import { Ground, updateGround } from "./Ground.jsx";
 import {
   getCustomProperty,
@@ -7,25 +8,40 @@ import {
   setCustomProperty,
 } from "./../helpers/updateProperty";
 import CactusItem from "./../assets/obstacles/cactus.png";
-import Cactus from "./Cactus.jsx";
+import HoleItem from "./../assets/obstacles/hole.png";
+import RoadBlock3Item from "./../assets/obstacles/road-block-3.png";
+import RoadBlock1Item from "./../assets/obstacles/road-block-1.png";
+import RoadBlock2Item from "./../assets/obstacles/road-block-2.png";
+import RoadBlock4Item from "./../assets/obstacles/road-block-4.png";
+import Obstacle from "./Obstacle.jsx";
 
 const Main = () => {
   const [gameStart, setGameStart] = useState(false);
   const [score, setScore] = useState(0);
   const [worldStyle, setWorldStyle] = useState();
   const [groundLeft, setGroundLeft] = useState([0, 300]);
-  const [dinoFrame, setDinoFrame] = useState(2);
+  const [dinoFrame, setDinoFrame] = useState(0);
   const [dinoBottom, setDinoBottom] = useState(0);
   const [cactuses, setCactuses] = useState([]);
 
   const worldRef = useRef(null);
   const cactusRefs = useRef([]);
+  const dinoRef = useRef(null);
+
+  const obstacles = [
+    { item: CactusItem, height: "30%" },
+    { item: RoadBlock3Item, height: "20%" },
+    { item: HoleItem, height: "15%" },
+    { item: RoadBlock2Item, height: "22%" },
+    { item: RoadBlock1Item, height: "25%" },
+    { item: RoadBlock4Item, height: "21%" },
+  ];
 
   const WORLD_WIDTH = 100;
   const WORLD_HEIGHT = 30;
   const SPEED_SCALE_INCREASE = 0.00001;
   const SPEED = 0.05;
-  const CACTUS_INTERVAL_MIN = 500;
+  const CACTUS_INTERVAL_MIN = 1000;
   const CACTUS_INTERVAL_MAX = 2000;
 
   let lastTime;
@@ -38,12 +54,53 @@ const Main = () => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
+  const getCactusRect = () => {
+    let elm;
+    // console.log("cactusRefs::>", cactusRefs);
+    if (cactusRefs.current[0].current !== null)
+      return cactusRefs.current.map((cactus) => {
+        elm = ReactDOM.findDOMNode(cactus.current);
+        // console.log("elm :>> ", elm);
+        if (elm !== null) return elm.getBoundingClientRect();
+        return {};
+      });
+    return [];
+  };
+
+  const handleLoose = () => {
+    setDinoLoose(setDinoFrame);
+    setScore(0);
+    newScore = 0;
+    setTimeout(() => {
+      document.addEventListener("keydown", handleStart, { once: true });
+    }, 100);
+  };
+
+  const checkLoose = () => {
+    const dinoRect = dinoRef.current.getBoundingClientRect();
+    // console.log("dinoRect", dinoRect);
+    return getCactusRect().some((rect) => isCollision(rect, dinoRect));
+  };
+
+  const isCollision = (rect1, rect2) => {
+    return (
+      rect1.left < rect2.right &&
+      rect1.top < rect2.bottom &&
+      rect1.right > rect2.left &&
+      rect1.bottom > rect2.top
+    );
+  };
+
   const createCactus = () => {
     cactusRefs.current.push(React.createRef());
-    const cactus = Cactus({
+    const cactus = Obstacle({
       ref: cactusRefs.current[cactusRefsIndex],
-      item: CactusItem,
+      item: obstacles[randomNumberBetween(obstacles.length, -1)],
     });
+    // console.log(
+    //   "randomNumberBetween(obstacles.length - 1, 0) :>> ",
+    //   randomNumberBetween(obstacles.length, -1)
+    // );
     let newCactusArray = cactuses;
     // const cactus = document.createElement("img");
     // cactus.ref = cactusRefs.current[cactusRefsIndex];
@@ -115,7 +172,7 @@ const Main = () => {
     window.requestAnimationFrame(update);
   };
 
-  const update = async (time) => {
+  const update = (time) => {
     if (lastTime == null) {
       lastTime = time;
       window.requestAnimationFrame(update);
@@ -127,6 +184,7 @@ const Main = () => {
     updateSpeedScale(delta);
     updateScore(delta);
     updateCactus(delta, speedScale);
+    if (checkLoose()) return handleLoose();
     lastTime = time;
     window.requestAnimationFrame(update);
   };
@@ -156,7 +214,7 @@ const Main = () => {
       {!gameStart && <div className="start-screen">press any key to start</div>}
       <div style={worldStyle} className="world" ref={worldRef}>
         <div className="score">{score}</div>
-        <Dino frame={dinoFrame} bottom={dinoBottom} />
+        <Dino frame={dinoFrame} bottom={dinoBottom} dinoRef={dinoRef} />
         <Ground left={groundLeft} />
         {cactuses && cactuses.map((cactus) => cactus)}
       </div>

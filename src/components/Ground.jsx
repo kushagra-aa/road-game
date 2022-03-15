@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GroundItem from "./../assets/road/ground.png";
+import GroundItem from "./../assets/road/road.png";
 
 const SPEED = 0.05;
 let newLeft = [0, 300];

@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
-import DinoOne from "./../assets/dino/dino-run-0.png";
-import DinoTwo from "./../assets/dino/dino-run-1.png";
-import DinoStop from "./../assets/dino/dino-stationary.png";
+import { useEffect } from "react";
+// !! FIX ASSETS SIZE AND EXPORTS
+import DinoOne from "./../assets/beanCar/beanCar-0.png";
+import DinoTwo from "./../assets/beanCar/beanCar-1.png";
+import DinoStop from "./../assets/beanCar/beanCar-jump.png";
+import DinoLoose from "./../assets/beanCar/beanCar-crash.png";
 
 const JUMP_SPEED = 0.45;
 const GRAVITY = 0.0015;
@@ -44,6 +46,9 @@ const handleRun = (delta, speedScale, setDinoFrame) => {
   currentFrameTime += delta * speedScale;
   return;
 };
+export const setDinoLoose = (setDinoFrame) => {
+  setDinoFrame(3);
+};
 
 const onJump = (e) => {
   if (e.code !== "Space" || isJumping) return;
@@ -52,8 +57,8 @@ const onJump = (e) => {
   return;
 };
 
-export const Dino = ({ frame, bottom }) => {
-  const dinos = [DinoOne, DinoTwo, DinoStop];
+export const Dino = ({ frame, bottom, dinoRef }) => {
+  const dinos = [DinoOne, DinoTwo, DinoStop, DinoLoose];
 
   useEffect(() => {
     isJumping = false;
@@ -73,7 +78,7 @@ export const Dino = ({ frame, bottom }) => {
       src={dinos[frame]}
       alt="dino-stationary"
       style={{ bottom: `${bottom}%` }}
-      data-dino
+      ref={dinoRef}
     />
   );
 };

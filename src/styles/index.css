@@ -56,15 +56,17 @@ body {
   position: absolute;
   width: 300%;
   bottom: 0;
+  z-index: -1;
 }
 
 .dino {
   position: absolute;
   left: 1%;
   height: 30%;
+  z-index: 1;
 }
 
-.cactus {
+.obstacle {
   --left: 100;
   position: absolute;
   left: calc(var(--left) * 1%);
