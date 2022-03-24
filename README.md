@@ -8,10 +8,13 @@ Jump and Beware of obstacles!
 Built with 🤍 For You!
 
 Hosted On netlify
+>It's also a PWA (can be installed on your device)
 
-<a target="_blank" href="https://widd-flix.web.app/">
+<a target="_blank" href="https://roadgame-k.netlify.app/">
   <img src="https://user-images.githubusercontent.com/68841296/159943880-a5b774c2-5792-4bd6-ae3a-d0e0c5f9a95e.png">
 </a>
+
+Play the game, share your highest socres to me.
 
 ## Screenshots
 
