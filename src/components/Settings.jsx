@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import SettingsIcon from "./../assets/icons/Settings.png";
 import CloseIcon from "./../assets/icons/close.png";
-import MusicIcon from "./../assets/icons/music.png";
-import AudioIcon from "./../assets/icons/audio.png";
 import ResetIcon from "./../assets/icons/reset.png";
 import BeanCarIcon from "./../assets/beanCar/beanCar-0.png";
 import CarIcon from "./../assets/car/car-0.png";
@@ -199,17 +197,9 @@ const Settings = ({
                       setIncludedObstacles(
                         includedObstacles.filter((io) => io !== obstacle.id)
                       );
-                      // console.log(
-                      //   "includedObstacles[removed] :>> ",
-                      //   includedObstacles
-                      // );
                       return;
                     }
                     setIncludedObstacles([...includedObstacles, obstacle.id]);
-                    // console.log(
-                    //   "includedObstacles[added] :>> ",
-                    //   includedObstacles
-                    // );
                   }}
                 >
                   <img src={obstacle.src} alt={obstacle.name} />

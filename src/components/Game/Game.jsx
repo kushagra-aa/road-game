@@ -83,13 +83,7 @@ const Game = ({
     }
   };
 
-  const modifyObstacles = () => {
-    console.log("obstacles :>> ", obstacles);
-    obstacles = obstacles.filter((obstacle) =>
-      includedObstacles.includes(obstacle.id)
-    );
-    console.log("obstacles :>> ", obstacles);
-  };
+  const modifyObstacles = () => {};
 
   const randomNumberBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -97,11 +91,9 @@ const Game = ({
 
   const getCactusRect = () => {
     let elm;
-    // console.log("cactusRefs::>", cactusRefs);
     if (cactusRefs.current[0].current !== null)
       return cactusRefs.current.map((cactus) => {
         elm = ReactDOM.findDOMNode(cactus.current);
-        // console.log("elm :>> ", elm);
         if (elm !== null) return elm.getBoundingClientRect();
         return {};
       });
@@ -123,8 +115,6 @@ const Game = ({
       bottom: vehicleRect.bottom - 2,
       top: vehicleRect.top - 2,
     };
-    // console.log("vehicleRect", vehicleRect);
-    // console.log("reducedRects", reducedRects);
     return getCactusRect().some((rect) => isCollision(rect, reducedRects));
   };
 
@@ -143,28 +133,10 @@ const Game = ({
       ref: cactusRefs.current[cactusRefsIndex],
       item: obstacles[randomNumberBetween(obstacles.length, -1)],
     });
-    // console.log(
-    //   "randomNumberBetween(obstacles.length - 1, 0) :>> ",
-    //   randomNumberBetween(obstacles.length, -1)
-    // );
     let newCactusArray = cactuses;
-    // const cactus = document.createElement("img");
-    // cactus.ref = cactusRefs.current[cactusRefsIndex];
-    // cactus.src = CactusItem;
-    // cactus.classList.add("cactus");
-    // console.log("cactus :>> ", cactus);
-    // console.log("cactusRefs :>> ", cactusRefs);
-    // console.log("worldRef", worldRef);
     newCactusArray.push(cactus);
-    // console.log("newCactusArray", newCactusArray);
     setCactuses(newCactusArray);
-    // worldRef.current.appendChild(cactus);
     cactusRefsIndex++;
-    // setCustomProperty(
-    //   cactusRefs.current.find((c) => c === cactus),
-    //   "--left",
-    //   100
-    // );
   };
 
   const setupCactus = () => {
@@ -185,11 +157,8 @@ const Game = ({
         }
       });
     if (nextCactusTime <= 0) {
-      // console.log("cactusRefs :>> ", cactusRefs);
       createCactus();
-      cactusRefs.current.forEach((cactus) => {
-        // setCustomProperty(cactus.current, "--left", 100);
-      });
+      cactusRefs.current.forEach((cactus) => {});
       nextCactusTime =
         randomNumberBetween(OBSTACLE_INTERVAL_MAX, obstacleIntervalMin) /
         speedScale;
@@ -250,9 +219,6 @@ const Game = ({
     setPixleToWorldSacle();
     window.addEventListener("resize", setPixleToWorldSacle);
     handleStart();
-    // console.log("locations :>> ", locations);
-    // console.log("currentLocation :>> ", currentLocation);
-    // console.log("locations[currentLocation] :>> ", locations[currentLocation]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
