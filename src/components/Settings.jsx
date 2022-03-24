@@ -163,18 +163,6 @@ const Settings = ({}) => {
                   className="setting-btn"
                   onClick={() => setIsSetting(false)}
                 >
-                  <img src={MusicIcon} alt="close button" />
-                </button>
-                <button
-                  className="setting-btn"
-                  onClick={() => setIsSetting(false)}
-                >
-                  <img src={AudioIcon} alt="close button" />
-                </button>
-                <button
-                  className="setting-btn"
-                  onClick={() => setIsSetting(false)}
-                >
                   <img src={ResetIcon} alt="close button" />
                 </button>
               </div>

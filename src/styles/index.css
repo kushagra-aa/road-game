@@ -106,7 +106,7 @@ h3 span {
   z-index: -1;
 }
 
-.dino {
+.vehicle {
   position: absolute;
   left: 1%;
   height: 30%;
@@ -264,8 +264,18 @@ h4 > span {
   color: var(--accent);
 }
 
+/* game over text */
+.game-over {
+  position: absolute;
+  background: var(--primary);
+  padding: 0.5em;
+  border-radius: 20px;
+  opacity: 0.9;
+}
+
 /* over page */
 .over-title {
+  transition: all 0.2s ease-in-out;
   text-transform: uppercase;
   font-size: 10vmin;
   color: var(--secondary);

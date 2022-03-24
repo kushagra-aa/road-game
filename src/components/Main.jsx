@@ -8,6 +8,7 @@ const Main = () => {
   const [page, setPage] = useState(1);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(localStorage.getItem("highScore"));
+  const [vehicle, setVehicle] = useState(0);
 
   const doStart = (e) => {
     if (e.code !== "Space" && e.code !== "ArrowUp" && e.code !== "Numpad8") {

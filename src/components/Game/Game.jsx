@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import { Dino, onJump, setDinoLoose, updateDino } from "./Dino.jsx";
+import { Vehicle, onJump, setVehicleLoose, updateVehicle } from "./Vehicle.jsx";
 import { Ground, updateGround } from "./Ground.jsx";
 import {
   getCustomProperty,
@@ -19,14 +19,14 @@ import Obstacle from "./Obstacle.jsx";
 const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
   const [worldStyle, setWorldStyle] = useState();
   const [groundLeft, setGroundLeft] = useState([0, 300]);
-  const [dinoFrame, setDinoFrame] = useState(0);
-  const [dinoBottom, setDinoBottom] = useState(0);
+  const [vehicleFrame, vetVehicleFrame] = useState(0);
+  const [vehicleBottom, setvehicleBottom] = useState(0);
   const [cactuses, setCactuses] = useState([]);
   const [lost, setLost] = useState(false);
 
   const worldRef = useRef(null);
   const cactusRefs = useRef([]);
-  const dinoRef = useRef(null);
+  const vehicleRef = useRef(null);
 
   const obstacles = [
     { item: CactusItem, height: "20%" },
@@ -68,16 +68,16 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
   };
 
   const handleLoose = () => {
-    setDinoLoose(setDinoFrame);
+    setVehicleLoose(vetVehicleFrame);
     setLost(true);
     setTimeout(() => setPage(3), 1000);
     newScore = 0;
   };
 
   const checkLoose = () => {
-    const dinoRect = dinoRef.current.getBoundingClientRect();
-    // console.log("dinoRect", dinoRect);
-    return getCactusRect().some((rect) => isCollision(rect, dinoRect));
+    const vehicleRect = vehicleRef.current.getBoundingClientRect();
+    // console.log("vehicleRect", vehicleRect);
+    return getCactusRect().some((rect) => isCollision(rect, vehicleRect));
   };
 
   const isCollision = (rect1, rect2) => {
@@ -177,7 +177,7 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
     }
     const delta = time - lastTime;
     setGroundLeft(updateGround(delta, speedScale));
-    updateDino(delta, speedScale, setDinoFrame, setDinoBottom);
+    updateVehicle(delta, speedScale, vetVehicleFrame, setvehicleBottom);
     updateSpeedScale(delta);
     updateScore(delta);
     updateCactus(delta, speedScale);
@@ -209,7 +209,7 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
 
   return (
     <>
-      {lost && <h2 className="over-title">game over</h2>}
+      {lost && <h2 className="over-title game-over">game over</h2>}
       <div style={worldStyle} className="world" ref={worldRef}>
         <div className="score">
           Score:<span>{score}</span>
@@ -217,7 +217,11 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
         <div className="score high-score">
           Hi:<span>{highScore}</span>
         </div>
-        <Dino frame={dinoFrame} bottom={dinoBottom} dinoRef={dinoRef} />
+        <Vehicle
+          frame={vehicleFrame}
+          bottom={vehicleBottom}
+          vehicleRef={vehicleRef}
+        />
         <Ground left={groundLeft} />
         {cactuses && cactuses.map((cactus) => cactus)}
       </div>
