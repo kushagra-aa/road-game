@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 // !! FIX ASSETS SIZE AND EXPORTS
-import DinoOne from "./../assets/beanCar/beanCar-0.png";
-import DinoTwo from "./../assets/beanCar/beanCar-1.png";
-import DinoStop from "./../assets/beanCar/beanCar-jump.png";
-import DinoLoose from "./../assets/beanCar/beanCar-crash.png";
+import DinoOne from "./../../assets/bike/bike-0.png";
+import DinoTwo from "./../../assets/bike/bike-1.png";
+import DinoStop from "./../../assets/bike/bike-jump.png";
+import DinoLoose from "./../../assets/bike/bike-crash.png";
 
 const JUMP_SPEED = 0.45;
 const GRAVITY = 0.0015;
@@ -50,8 +50,12 @@ export const setDinoLoose = (setDinoFrame) => {
   setDinoFrame(3);
 };
 
-const onJump = (e) => {
-  if (e.code !== "Space" || isJumping) return;
+export const onJump = (e) => {
+  if (
+    (e.code !== "Space" && e.code !== "ArrowUp" && e.code !== "Numpad8") ||
+    isJumping
+  )
+    return;
   yVelocity = JUMP_SPEED;
   isJumping = true;
   return;
