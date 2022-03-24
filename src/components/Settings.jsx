@@ -20,67 +20,90 @@ import RoadBlock2Item from "./../assets/obstacles/road-block-2.png";
 import RoadBlock3Item from "./../assets/obstacles/road-block-3.png";
 import RoadBlock4Item from "./../assets/obstacles/road-block-4.png";
 
-const Settings = ({}) => {
+const Settings = ({
+  currentVehicle,
+  setCurrentVehicle,
+  currentDifficulty,
+  setCurrentDifficulty,
+  setCurrentLocation,
+  currentLocation,
+  includedObstacles,
+  setIncludedObstacles,
+  setHighScore,
+  setScore,
+}) => {
   const [isSetting, setIsSetting] = useState(false);
 
   const vehicles = [
     {
+      id: 0,
       src: BeanCarIcon,
       name: "beanCar",
     },
     {
+      id: 1,
       src: BikeIcon,
       name: "bike",
     },
     {
+      id: 2,
       src: BusIcon,
       name: "bus",
     },
     {
+      id: 3,
       src: CarIcon,
       name: "car",
     },
     {
+      id: 4,
       src: CycleIcon,
       name: "cycle",
     },
   ];
   const locations = [
     {
+      id: 0,
       src: CityIcon,
       name: "city",
     },
     {
+      id: 1,
       src: WestIcon,
       name: "west",
     },
     {
+      id: 2,
       src: WarzoneIcon,
       name: "warzone",
     },
     {
+      id: 3,
       src: FutureIcon,
       name: "future",
     },
   ];
   const obstacles = [
-    { src: CactusItem, name: "cactus" },
-    { src: HoleItem, name: "hole" },
-    { src: RoadBlock1Item, name: "road block 1" },
-    { src: RoadBlock2Item, name: "road block 2" },
-    { src: RoadBlock3Item, name: "road block 3" },
-    { src: RoadBlock4Item, name: "road block 4" },
+    { id: 0, src: CactusItem, name: "cactus" },
+    { id: 1, src: HoleItem, name: "hole" },
+    { id: 2, src: RoadBlock1Item, name: "road block 1" },
+    { id: 3, src: RoadBlock2Item, name: "road block 2" },
+    { id: 4, src: RoadBlock3Item, name: "road block 3" },
+    { id: 5, src: RoadBlock4Item, name: "road block 4" },
   ];
   const difficulties = [
     {
+      id: 0,
       des: ["Slow Increase in speed", "Low Obstacles Density"],
       name: "ez mode",
     },
     {
+      id: 1,
       des: ["Normal Increase in speed", "Normal Obstacles Density"],
       name: "chill mode",
     },
     {
+      id: 2,
       des: ["High Increase in speed", "High Obstacles Density"],
       name: "tuff mode",
     },
@@ -106,7 +129,13 @@ const Settings = ({}) => {
             </div>
             <div className="settings-row-cards">
               {vehicles.map((vehicle) => (
-                <div key={vehicle.name} className="settings-row-card">
+                <div
+                  key={vehicle.id}
+                  className={`settings-row-card ${
+                    vehicle.id === currentVehicle && "setting-current"
+                  }`}
+                  onClick={() => setCurrentVehicle(vehicle.id)}
+                >
                   <img src={vehicle.src} alt={vehicle.name} />
                 </div>
               ))}
@@ -118,7 +147,13 @@ const Settings = ({}) => {
             </div>
             <div className="settings-row-cards">
               {difficulties.map((difficulty) => (
-                <div key={difficulty.name} className="settings-row-card">
+                <div
+                  key={difficulty.id}
+                  className={`settings-row-card ${
+                    difficulty.id === currentDifficulty && "setting-current"
+                  }`}
+                  onClick={() => setCurrentDifficulty(difficulty.id)}
+                >
                   <h6>{difficulty.name}</h6>
                   <ul>
                     {difficulty.des.map((d) => (
@@ -135,7 +170,13 @@ const Settings = ({}) => {
             </div>
             <div className="settings-row-cards">
               {locations.map((location) => (
-                <div key={location.name} className="settings-row-card">
+                <div
+                  key={location.id}
+                  className={`settings-row-card ${
+                    location.id === currentLocation && "setting-current"
+                  }`}
+                  onClick={() => setCurrentLocation(location.id)}
+                >
                   <h6>{location.name}</h6>
                   <img src={location.src} alt={location.name} />
                 </div>
@@ -149,23 +190,46 @@ const Settings = ({}) => {
             <div className="settings-row-cards">
               {obstacles.map((obstacle) => (
                 <div
-                  key={obstacle.name}
-                  className="settings-row-card settings-small-img"
+                  key={obstacle.id}
+                  className={`settings-row-card settings-small-img ${
+                    includedObstacles.includes(obstacle.id) && "setting-current"
+                  }`}
+                  onClick={() => {
+                    if (includedObstacles.includes(obstacle.id)) {
+                      setIncludedObstacles(
+                        includedObstacles.filter((io) => io !== obstacle.id)
+                      );
+                      // console.log(
+                      //   "includedObstacles[removed] :>> ",
+                      //   includedObstacles
+                      // );
+                      return;
+                    }
+                    setIncludedObstacles([...includedObstacles, obstacle.id]);
+                    // console.log(
+                    //   "includedObstacles[added] :>> ",
+                    //   includedObstacles
+                    // );
+                  }}
                 >
                   <img src={obstacle.src} alt={obstacle.name} />
                 </div>
               ))}
             </div>
-            <div className="settings-row">
-              <div className="settings-row-top">{""}</div>
-              <div className="settings-row-cards">
-                <button
-                  className="setting-btn"
-                  onClick={() => setIsSetting(false)}
-                >
-                  <img src={ResetIcon} alt="close button" />
-                </button>
-              </div>
+          </div>
+          <div className="settings-row settings-last">
+            <div className="settings-row-top">{""}</div>
+            <div className="settings-row-cards">
+              <button
+                className="setting-btn"
+                onClick={() => {
+                  setHighScore(0);
+                  setScore(0);
+                  localStorage.setItem("highScore", "0");
+                }}
+              >
+                <img src={ResetIcon} alt="reset button" />
+              </button>
             </div>
           </div>
         </div>

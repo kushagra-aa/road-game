@@ -68,7 +68,6 @@ h3 span {
 .world {
   overflow: hidden;
   position: relative;
-  background-image: url(./../assets/bg/west.png);
   z-index: -2;
   background-size: cover;
   background-repeat: no-repeat;
@@ -109,7 +108,7 @@ h3 span {
 .vehicle {
   position: absolute;
   left: 1%;
-  height: 30%;
+  height: 20%;
   z-index: 1;
 }
 
@@ -156,7 +155,7 @@ h3 span {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #ffd5cd20;
+  background: #ffd5cd3e;
   -webkit-backdrop-filter: blur(40px);
   backdrop-filter: blur(40px);
   height: 90%;
@@ -175,6 +174,10 @@ h3 span {
   display: flex;
   flex-direction: column;
   gap: 1vh;
+}
+
+.settings-last {
+  margin-top: 0.7em;
 }
 
 .settings-row-top {
@@ -243,7 +246,7 @@ h3 span {
   width: 3rem;
   border-radius: 0 0 4px 4px;
 }
-.setting-active {
+.setting-current {
   border: 2px solid var(--accent);
   box-sizing: border-box;
 }

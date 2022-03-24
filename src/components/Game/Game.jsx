@@ -15,8 +15,22 @@ import RoadBlock3Item from "./../../assets/obstacles/road-block-3.png";
 import RoadBlock4Item from "./../../assets/obstacles/road-block-4.png";
 import JumpIcon from "./../../assets/icons/Jump.png";
 import Obstacle from "./Obstacle.jsx";
+import City from "./../../assets/bg/city.png";
+import West from "./../../assets/bg/west.png";
+import Warzone from "./../../assets/bg/warzone.png";
+import Future from "./../../assets/bg/future.png";
 
-const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
+const Game = ({
+  setPage,
+  score,
+  setScore,
+  highScore,
+  setHighScore,
+  currentVehicle,
+  currentDifficulty,
+  currentLocation,
+  includedObstacles,
+}) => {
   const [worldStyle, setWorldStyle] = useState();
   const [groundLeft, setGroundLeft] = useState([0, 300]);
   const [vehicleFrame, vetVehicleFrame] = useState(0);
@@ -28,27 +42,54 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
   const cactusRefs = useRef([]);
   const vehicleRef = useRef(null);
 
-  const obstacles = [
-    { item: CactusItem, height: "20%" },
-    { item: RoadBlock3Item, height: "20%" },
-    { item: HoleItem, height: "15%" },
-    { item: RoadBlock2Item, height: "22%" },
-    { item: RoadBlock1Item, height: "21%" },
-    { item: RoadBlock4Item, height: "14%" },
-  ];
+  const locations = [City, West, Warzone, Future];
 
   const WORLD_WIDTH = 100;
-  const WORLD_HEIGHT = 42;
-  const SPEED_SCALE_INCREASE = 0.00001;
+  const WORLD_HEIGHT = 35;
   const SPEED = 0.05;
-  const CACTUS_INTERVAL_MIN = 1000;
-  const CACTUS_INTERVAL_MAX = 2000;
+  const OBSTACLE_INTERVAL_MAX = 2000;
 
   let lastTime;
   let speedScale;
   let newScore = 0;
   let nextCactusTime = 0;
   let cactusRefsIndex = 0;
+  let obstacleIntervalMin = 1000;
+  let speedScaleIncrease = 0.00001;
+
+  let obstacles = [
+    { id: 0, item: CactusItem, height: "20%" },
+    { id: 1, item: HoleItem, height: "15%" },
+    { id: 2, item: RoadBlock1Item, height: "15%" },
+    { id: 3, item: RoadBlock2Item, height: "16%" },
+    { id: 4, item: RoadBlock3Item, height: "20%" },
+    { id: 5, item: RoadBlock4Item, height: "14%" },
+  ];
+  const checkDifficulty = () => {
+    switch (currentDifficulty) {
+      case 0:
+        obstacleIntervalMin = 1200;
+        speedScaleIncrease = 0.000008;
+        break;
+      case 1:
+        break;
+      case 2:
+        obstacleIntervalMin = 750;
+        speedScaleIncrease = 0.00003;
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const modifyObstacles = () => {
+    console.log("obstacles :>> ", obstacles);
+    obstacles = obstacles.filter((obstacle) =>
+      includedObstacles.includes(obstacle.id)
+    );
+    console.log("obstacles :>> ", obstacles);
+  };
 
   const randomNumberBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -76,8 +117,15 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
 
   const checkLoose = () => {
     const vehicleRect = vehicleRef.current.getBoundingClientRect();
+    const reducedRects = {
+      left: vehicleRect.left - 2,
+      right: vehicleRect.right - 2,
+      bottom: vehicleRect.bottom - 2,
+      top: vehicleRect.top - 2,
+    };
     // console.log("vehicleRect", vehicleRect);
-    return getCactusRect().some((rect) => isCollision(rect, vehicleRect));
+    // console.log("reducedRects", reducedRects);
+    return getCactusRect().some((rect) => isCollision(rect, reducedRects));
   };
 
   const isCollision = (rect1, rect2) => {
@@ -143,7 +191,7 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
         // setCustomProperty(cactus.current, "--left", 100);
       });
       nextCactusTime =
-        randomNumberBetween(CACTUS_INTERVAL_MAX, CACTUS_INTERVAL_MIN) /
+        randomNumberBetween(OBSTACLE_INTERVAL_MAX, obstacleIntervalMin) /
         speedScale;
     }
     nextCactusTime -= delta;
@@ -165,6 +213,8 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
   const handleStart = () => {
     lastTime = null;
     speedScale = 1;
+    checkDifficulty();
+    modifyObstacles();
     setupCactus();
     window.requestAnimationFrame(update);
   };
@@ -187,7 +237,7 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
   };
 
   const updateSpeedScale = (delta) => {
-    speedScale += delta * SPEED_SCALE_INCREASE;
+    speedScale += delta * speedScaleIncrease;
   };
 
   const updateScore = (delta) => {
@@ -200,6 +250,9 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
     setPixleToWorldSacle();
     window.addEventListener("resize", setPixleToWorldSacle);
     handleStart();
+    // console.log("locations :>> ", locations);
+    // console.log("currentLocation :>> ", currentLocation);
+    // console.log("locations[currentLocation] :>> ", locations[currentLocation]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -210,7 +263,14 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
   return (
     <>
       {lost && <h2 className="over-title game-over">game over</h2>}
-      <div style={worldStyle} className="world" ref={worldRef}>
+      <div
+        style={{
+          ...worldStyle,
+          backgroundImage: `url(${locations[currentLocation]})`,
+        }}
+        className="world"
+        ref={worldRef}
+      >
         <div className="score">
           Score:<span>{score}</span>
         </div>
@@ -221,6 +281,7 @@ const Game = ({ setPage, score, setScore, highScore, setHighScore }) => {
           frame={vehicleFrame}
           bottom={vehicleBottom}
           vehicleRef={vehicleRef}
+          currentVehicle={currentVehicle}
         />
         <Ground left={groundLeft} />
         {cactuses && cactuses.map((cactus) => cactus)}

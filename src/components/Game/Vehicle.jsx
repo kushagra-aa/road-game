@@ -1,9 +1,25 @@
 import { useEffect } from "react";
 // !! FIX ASSETS SIZE AND EXPORTS
-import VehicleOne from "./../../assets/bike/bike-0.png";
-import VehicleTwo from "./../../assets/bike/bike-1.png";
-import VehicleStop from "./../../assets/bike/bike-jump.png";
-import VehicleLoose from "./../../assets/bike/bike-crash.png";
+import BikeOne from "./../../assets/bike/bike-0.png";
+import BikeTwo from "./../../assets/bike/bike-1.png";
+import BikeStop from "./../../assets/bike/bike-jump.png";
+import BikeLoose from "./../../assets/bike/bike-crash.png";
+import CarOne from "./../../assets/car/car-0.png";
+import CarTwo from "./../../assets/car/car-1.png";
+import CarStop from "./../../assets/car/car-jump.png";
+import CarLoose from "./../../assets/car/car-crash.png";
+import BeanCarOne from "./../../assets/beanCar/beanCar-0.png";
+import BeanCarTwo from "./../../assets/beanCar/beanCar-1.png";
+import BeanCarStop from "./../../assets/beanCar/beanCar-jump.png";
+import BeanCarLoose from "./../../assets/beanCar/beanCar-crash.png";
+import BusOne from "./../../assets/bus/bus-0.png";
+import BusTwo from "./../../assets/bus/bus-1.png";
+import BusStop from "./../../assets/bus/bus-jump.png";
+import BusLoose from "./../../assets/bus/bus-crash.png";
+import CycleOne from "./../../assets/cycle/cycle-0.png";
+import CycleTwo from "./../../assets/cycle/cycle-1.png";
+import CycleStop from "./../../assets/cycle/cycle-jump.png";
+import CycleLoose from "./../../assets/cycle/cycle-crash.png";
 
 const JUMP_SPEED = 0.45;
 const GRAVITY = 0.0015;
@@ -61,22 +77,25 @@ export const onJump = (e) => {
     isJumping
   )
     return;
-  // jump here
-  // JumpAudio.play();
   yVelocity = JUMP_SPEED;
   isJumping = true;
   return;
 };
 
-export const Vehicle = ({ frame, bottom, vehicleRef }) => {
-  const vehicles = [VehicleOne, VehicleTwo, VehicleStop, VehicleLoose];
+export const Vehicle = ({ frame, bottom, vehicleRef, currentVehicle }) => {
+  const vehicles = [
+    [BeanCarOne, BeanCarTwo, BeanCarStop, BeanCarLoose],
+    [BikeOne, BikeTwo, BikeStop, BikeLoose],
+    [BusOne, BusTwo, BusStop, BusLoose],
+    [CarOne, CarTwo, CarStop, CarLoose],
+    [CycleOne, CycleTwo, CycleStop, CycleLoose],
+  ];
 
   useEffect(() => {
     isJumping = false;
     VehicleFrame = 0;
     currentFrameTime = 0;
     yVelocity = 0;
-
     document.addEventListener("keydown", onJump);
     return () => {
       document.removeEventListener("keydown", onJump);
@@ -86,9 +105,12 @@ export const Vehicle = ({ frame, bottom, vehicleRef }) => {
   return (
     <img
       className="vehicle"
-      src={vehicles[frame]}
-      alt="Vehicle-stationary"
-      style={{ bottom: `${bottom}%` }}
+      src={vehicles[currentVehicle][frame]}
+      alt="Vehicle"
+      style={{
+        bottom: `${bottom}%`,
+        height: `${currentVehicle === 2 ? "18" : "20"}%`,
+      }}
       ref={vehicleRef}
     />
   );
