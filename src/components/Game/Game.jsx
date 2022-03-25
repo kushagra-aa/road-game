@@ -5,7 +5,6 @@ import { Ground, updateGround } from "./Ground.jsx";
 import {
   getCustomProperty,
   incrementCustomProperty,
-  setCustomProperty,
 } from "./../../helpers/updateProperty";
 import CactusItem from "./../../assets/obstacles/cactus.png";
 import HoleItem from "./../../assets/obstacles/hole.png";
@@ -83,7 +82,11 @@ const Game = ({
     }
   };
 
-  const modifyObstacles = () => {};
+  const modifyObstacles = () => {
+    obstacles = obstacles.filter((obstacle) =>
+      includedObstacles.includes(obstacle.id)
+    );
+  };
 
   const randomNumberBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -103,7 +106,7 @@ const Game = ({
   const handleLoose = () => {
     setVehicleLoose(vetVehicleFrame);
     setLost(true);
-    setTimeout(() => setPage(3), 1000);
+    // setTimeout(() => setPage(3), 1000);
     newScore = 0;
   };
 

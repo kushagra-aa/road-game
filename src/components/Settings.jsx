@@ -191,8 +191,18 @@ const Settings = ({
                   key={obstacle.id}
                   className={`settings-row-card settings-small-img ${
                     includedObstacles.includes(obstacle.id) && "setting-current"
+                  } ${
+                    includedObstacles.includes(obstacle.id) &&
+                    includedObstacles.length <= 1
+                      ? "setting-disabled"
+                      : "set"
                   }`}
                   onClick={() => {
+                    if (
+                      includedObstacles.includes(obstacle.id) &&
+                      includedObstacles.length <= 1
+                    )
+                      return;
                     if (includedObstacles.includes(obstacle.id)) {
                       setIncludedObstacles(
                         includedObstacles.filter((io) => io !== obstacle.id)

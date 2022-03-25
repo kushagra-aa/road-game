@@ -76,7 +76,6 @@ h3 span {
   background-size: cover;
   background-repeat: no-repeat;
   background-position-x: center;
-  max-height: 495px;
 }
 
 .score {
@@ -254,6 +253,10 @@ h3 span {
   border: 2px solid var(--accent);
   box-sizing: border-box;
 }
+.setting-disabled {
+  filter: grayscale();
+  cursor: not-allowed;
+}
 
 /* home page */
 
@@ -299,7 +302,7 @@ h4 {
   text-align: center;
 }
 
-@media (min-width: 900px) or (orientation: landscape) {
+@media (min-width: 900px) {
   .jump-button {
     display: none;
   }
@@ -315,7 +318,7 @@ h4 {
     text-transform: capitalize;
   }
 }
-@media (orientation: landscape) {
+@media (orientation: landscape) and (max-width: 768px) {
   .jump-button {
     bottom: 50vh;
     left: 2vw;

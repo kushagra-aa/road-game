@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Home = ({ setPage, doStart, highScore }) => {
+const Home = ({ doStart, highScore }) => {
   useEffect(() => {
     document.addEventListener("keydown", doStart, { once: true });
   }, []);
