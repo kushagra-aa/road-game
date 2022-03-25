@@ -106,7 +106,7 @@ const Game = ({
   const handleLoose = () => {
     setVehicleLoose(vetVehicleFrame);
     setLost(true);
-    // setTimeout(() => setPage(3), 1000);
+    setTimeout(() => setPage(3), 1000);
     newScore = 0;
   };
 
