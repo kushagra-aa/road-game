@@ -124,7 +124,7 @@ h3 span {
 /* jump button */
 .jump-button {
   position: absolute;
-  bottom: 20vh;
+  bottom: 10vh;
   left: 5vw;
   z-index: 5;
   background: var(--accent);

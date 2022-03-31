@@ -14,10 +14,10 @@ import RoadBlock3Item from "./../../assets/obstacles/road-block-3.png";
 import RoadBlock4Item from "./../../assets/obstacles/road-block-4.png";
 import JumpIcon from "./../../assets/icons/Jump.png";
 import Obstacle from "./Obstacle.jsx";
-import City from "./../../assets/bg/cityy.png";
-import West from "./../../assets/bg/westt.png";
-import Warzone from "./../../assets/bg/warzonee.png";
-import Future from "./../../assets/bg/futuree.png";
+import City from "./../../assets/bg/city.png";
+import West from "./../../assets/bg/west.png";
+import Warzone from "./../../assets/bg/warzone.png";
+import Future from "./../../assets/bg/future.png";
 
 const Game = ({
   setPage,
@@ -106,7 +106,7 @@ const Game = ({
   const handleLoose = () => {
     setVehicleLoose(vetVehicleFrame);
     setLost(true);
-    // setTimeout(() => setPage(3), 1000);
+    setTimeout(() => setPage(3), 1000);
     newScore = 0;
   };
 

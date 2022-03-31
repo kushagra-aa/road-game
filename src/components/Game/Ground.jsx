@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import GroundItem from "./../../assets/bg/west.png";
 
 const SPEED = 0.05;
 let newLeft = [0, 300];
