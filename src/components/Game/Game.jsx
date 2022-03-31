@@ -14,10 +14,10 @@ import RoadBlock3Item from "./../../assets/obstacles/road-block-3.png";
 import RoadBlock4Item from "./../../assets/obstacles/road-block-4.png";
 import JumpIcon from "./../../assets/icons/Jump.png";
 import Obstacle from "./Obstacle.jsx";
-import City from "./../../assets/bg/city.png";
-import West from "./../../assets/bg/west.png";
-import Warzone from "./../../assets/bg/warzone.png";
-import Future from "./../../assets/bg/future.png";
+import City from "./../../assets/bg/cityy.png";
+import West from "./../../assets/bg/westt.png";
+import Warzone from "./../../assets/bg/warzonee.png";
+import Future from "./../../assets/bg/futuree.png";
 
 const Game = ({
   setPage,
@@ -44,7 +44,7 @@ const Game = ({
   const locations = [City, West, Warzone, Future];
 
   const WORLD_WIDTH = 100;
-  const WORLD_HEIGHT = 35;
+  const WORLD_HEIGHT = 75;
   const SPEED = 0.05;
   const OBSTACLE_INTERVAL_MAX = 2000;
 
@@ -57,12 +57,12 @@ const Game = ({
   let speedScaleIncrease = 0.00001;
 
   let obstacles = [
-    { id: 0, item: CactusItem, height: "20%" },
-    { id: 1, item: HoleItem, height: "15%" },
+    { id: 0, item: CactusItem, height: "10%" },
+    { id: 1, item: HoleItem, height: "8%" },
     { id: 2, item: RoadBlock1Item, height: "15%" },
-    { id: 3, item: RoadBlock2Item, height: "16%" },
-    { id: 4, item: RoadBlock3Item, height: "20%" },
-    { id: 5, item: RoadBlock4Item, height: "14%" },
+    { id: 3, item: RoadBlock2Item, height: "13%" },
+    { id: 4, item: RoadBlock3Item, height: "12%" },
+    { id: 5, item: RoadBlock4Item, height: "10%" },
   ];
   const checkDifficulty = () => {
     switch (currentDifficulty) {
@@ -106,7 +106,7 @@ const Game = ({
   const handleLoose = () => {
     setVehicleLoose(vetVehicleFrame);
     setLost(true);
-    setTimeout(() => setPage(3), 1000);
+    // setTimeout(() => setPage(3), 1000);
     newScore = 0;
   };
 
@@ -235,7 +235,6 @@ const Game = ({
       <div
         style={{
           ...worldStyle,
-          backgroundImage: `url(${locations[currentLocation]})`,
         }}
         className="world"
         ref={worldRef}
@@ -252,7 +251,7 @@ const Game = ({
           vehicleRef={vehicleRef}
           currentVehicle={currentVehicle}
         />
-        <Ground left={groundLeft} />
+        <Ground left={groundLeft} location={locations[currentLocation]} />
         {cactuses && cactuses.map((cactus) => cactus)}
       </div>
       <button onClick={() => onJump({ code: "Space" })} className="jump-button">

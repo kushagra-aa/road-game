@@ -73,9 +73,6 @@ h3 span {
   overflow: hidden;
   position: relative;
   z-index: -2;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position-x: center;
 }
 
 .score {
@@ -104,6 +101,7 @@ h3 span {
 .ground {
   position: absolute;
   width: 300%;
+  height: 100%;
   bottom: 0;
   z-index: -1;
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import GroundItem from "./../../assets/road/road.png";
+import GroundItem from "./../../assets/bg/west.png";
 
 const SPEED = 0.05;
 let newLeft = [0, 300];
@@ -11,11 +11,10 @@ export const updateGround = async (delta, speedScale, left) => {
       newLeft[i] += 600;
     }
   });
-
   return newLeft;
 };
 
-export const Ground = ({ left }) => {
+export const Ground = ({ left, location }) => {
   const [ground1Style, setGround1Style] = useState();
   const [ground2Style, setGround2Style] = useState();
 
@@ -35,13 +34,13 @@ export const Ground = ({ left }) => {
       <img
         className="ground"
         style={ground1Style}
-        src={GroundItem}
+        src={location}
         alt="ground"
       />
       <img
         className="ground"
         style={ground2Style}
-        src={GroundItem}
+        src={location}
         alt="ground"
       />
     </>
