@@ -113,10 +113,10 @@ const Game = ({
   const checkLoose = () => {
     const vehicleRect = vehicleRef.current.getBoundingClientRect();
     const reducedRects = {
-      left: vehicleRect.left - 2,
-      right: vehicleRect.right - 2,
-      bottom: vehicleRect.bottom - 2,
-      top: vehicleRect.top - 2,
+      left: vehicleRect.left - 3,
+      right: vehicleRect.right - 3,
+      bottom: vehicleRect.bottom - 3,
+      top: vehicleRect.top - 3,
     };
     return getCactusRect().some((rect) => isCollision(rect, reducedRects));
   };
