@@ -84,11 +84,11 @@ export const onJump = (e) => {
 
 export const Vehicle = ({ frame, bottom, vehicleRef, currentVehicle }) => {
   const vehicles = [
-    [BeanCarOne, BeanCarTwo, BeanCarStop, BeanCarLoose],
-    [BikeOne, BikeTwo, BikeStop, BikeLoose],
-    [BusOne, BusTwo, BusStop, BusLoose],
-    [CarOne, CarTwo, CarStop, CarLoose],
-    [CycleOne, CycleTwo, CycleStop, CycleLoose],
+    /*0*/ [BeanCarOne, BeanCarTwo, BeanCarStop, BeanCarLoose],
+    /*1*/ [BikeOne, BikeTwo, BikeStop, BikeLoose],
+    /*2*/ [BusOne, BusTwo, BusStop, BusLoose],
+    /*3*/ [CarOne, CarTwo, CarStop, CarLoose],
+    /*4*/ [CycleOne, CycleTwo, CycleStop, CycleLoose],
   ];
 
   useEffect(() => {
@@ -109,7 +109,9 @@ export const Vehicle = ({ frame, bottom, vehicleRef, currentVehicle }) => {
       alt="Vehicle"
       style={{
         bottom: `${bottom}%`,
-        height: `${currentVehicle === 2 ? "18" : "20"}%`,
+        height: `${
+          currentVehicle === 2 ? "15" : currentVehicle === 3 ? "12" : "16"
+        }%`,
       }}
       ref={vehicleRef}
     />
